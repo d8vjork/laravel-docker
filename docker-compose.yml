@@ -1,0 +1,43 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: "${APP_SLUG}_db"
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    ports:
+      - "${APP_DB_PORT}:3306"
+
+  http:
+    image: nginx:alpine
+    container_name: "${APP_SLUG}_http"
+    working_dir: /var/www
+    volumes:
+      - "./${APP_PATH_HOST}:${APP_PATH_CONTAINER}:cached"
+      - ./support/docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+     - "${APP_HTTP_PORT}:80"
+
+  app:
+    build: docker/php-fpm
+    container_name: "${APP_SLUG}_app"
+    volumes:
+      - "./${APP_PATH_HOST}:${APP_PATH_CONTAINER}:cached"
+    environment:
+      APP_NAME: ${APP_NAME}
+      DB_CONNECTION: ${APP_DB_CONNECTION}
+      DB_HOST: "${APP_SLUG}_db"
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_NAME}
+      DB_USERNAME: ${DB_USER}
+      DB_PASSWORD: ${DB_USER_PASS}
+      APP_ENV: ${APP_ENV}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_URL: ${APP_URL}
+      LOG_CHANNEL: ${APP_LOG_CHANNEL}
+      BROADCAST_DRIVER: ${APP_BROADCAST_DRIVER}
+      CACHE_DRIVER: ${APP_CACHE_DRIVER}
+      QUEUE_DRIVER: ${APP_QUEUE_DRIVER}
