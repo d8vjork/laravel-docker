@@ -61,7 +61,7 @@ make down - Alias of stop
 make restart - Run a down/up
 ```
 
-If you need more, you can always digging deeper into the [Makefile](https://github.com/d8vjork/laravel-docker/blob/master/README.md).
+If you need more, you can always digging deeper into the [Makefile](https://github.com/d8vjork/laravel-docker/blob/master/Makefile).
 
 ## Extras
 
