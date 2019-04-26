@@ -61,6 +61,8 @@ make down - Alias of stop
 make restart - Run a down/up
 ```
 
+**Update: Check `make` or `make help` for display all the commands.**
+
 If you need more, you can always digging deeper into the [Makefile](https://github.com/d8vjork/laravel-docker/blob/master/Makefile).
 
 ## Extras
